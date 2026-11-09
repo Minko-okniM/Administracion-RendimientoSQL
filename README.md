@@ -73,6 +73,8 @@ DELIMITER ;
 -- Ejecución
 CALL generar_ventas_masivas();
 ```
+<img width="1650" height="822" alt="Captura de pantalla 2026-11-08 225509" src="https://github.com/user-attachments/assets/7e7c3f3e-a73c-4fa1-bdc5-09b9d4ef6fb5" />
+
 ### Paso 3.3: Ejecución de la Consulta Lenta (Sin Optimización)
 Ejecutamos la consulta compleja de agregación sobre el rango de fechas y estado:
 ```sql
@@ -86,6 +88,8 @@ WHERE fecha_venta BETWEEN '2025-01-01' AND '2025-06-30'
 GROUP BY codigo_sucursal
 ORDER BY monto_total DESC;
 ```
+<img width="829" height="322" alt="Captura de pantalla 2026-11-08 225640" src="https://github.com/user-attachments/assets/4dfa2ff5-a207-48f7-b0b5-63f9fecc348d" />
+
 Resultado de Análisis (Plan de Ejecución):
 Tipo de búsqueda: type = ALL (Full Table Scan).
 
@@ -112,6 +116,8 @@ WHERE fecha_venta BETWEEN '2025-01-01' AND '2025-06-30'
 GROUP BY codigo_sucursal
 ORDER BY monto_total DESC;
 ```
+<img width="1017" height="250" alt="Captura de pantalla 2026-11-08 230423" src="https://github.com/user-attachments/assets/98cfe9bd-f626-4e4c-bcfc-0a59daf3ef2b" />
+
 Resultado de Análisis (Plan de Ejecución Optimizado):
 Tipo de búsqueda: type = range.
 
@@ -123,3 +129,4 @@ Reducción de lectura: Inspección acotada a través del árbol del índice.
 Rendimiento: Al sustituir la lectura secuencial de casi un millón de filas por una estructura indexada, eliminamos el costo de E/S en disco y reducimos la sobrecarga de CPU en la base de datos.
 
 Conclusión: La optimización en SQL no consiste únicamente en escribir la sintaxis correcta, sino en analizar la forma en que el motor ejecuta la consulta (EXPLAIN) y diseñar estructuras de acceso a datos (como índices compuestos) que aceleren la recuperación de información a gran escala.
+
